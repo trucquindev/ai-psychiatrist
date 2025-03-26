@@ -1,0 +1,16 @@
+services:
+  ollama-server:
+    image: ollama-server
+    build:
+      context: ./ollama
+      dockerfile: Dockerfile
+    ports:
+      - '11434:11434'
+    networks:
+      - my-net
+    entrypoint: ['/bin/sh', '/pull-model.sh']
+    container_name: ollama-server
+
+networks:
+  my-net:
+    driver: bridge

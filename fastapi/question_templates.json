@@ -1,0 +1,20 @@
+{
+  "stress": [
+    "Bạn cảm thấy stress trong bao lâu?",
+    "Nguyên nhân khiến bạn cảm thấy căng thẳng là gì?",
+    "Bạn đã thử phương pháp nào để giảm stress chưa?",
+    "Bạn có đang gặp khó khăn trong công việc/học tập không?"
+  ],
+  "mất ngủ": [
+    "Bạn đã bị mất ngủ bao lâu rồi?",
+    "Bạn có thường xuyên tỉnh giấc giữa đêm không?",
+    "Bạn đã thử các phương pháp giúp ngủ ngon chưa?",
+    "Bạn có suy nghĩ gì nhiều khi cố gắng đi ngủ không?"
+  ],
+  "lo lắng": [
+    "Bạn thường lo lắng về điều gì nhất?",
+    "Khi lo lắng, bạn có triệu chứng cơ thể như tim đập nhanh, khó thở không?",
+    "Bạn đã từng tìm cách nào để giảm lo lắng chưa?",
+    "Mức độ lo lắng của bạn ảnh hưởng nhiều đến cuộc sống hàng ngày không?"
+  ]
+}
