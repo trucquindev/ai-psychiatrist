@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import uuid
-from chatbot_logic import process_message, handle_answer
+from chatbot_logic import process_message, handle_answer , handle_chat_normal
 
 app = FastAPI()
 # 🛠️ Cấu hình CORS
@@ -20,6 +20,11 @@ class ChatRequest(BaseModel):
 class AnswerRequest(BaseModel):
     user_id: str
     message: str
+    
+class ChatNormalRequest(BaseModel):
+    message: str
+    user_id: str
+    normal: bool
 
 # 📨 API xử lý tin nhắn ban đầu (Tự tạo user_id)
 @app.post("/chat")
@@ -32,6 +37,11 @@ def chat(request: ChatRequest):
 @app.post("/answer")
 def answer(request: AnswerRequest):
     return handle_answer(request.message, request.user_id)
+
+@app.post("/chat_normal")
+def chat_normal(request: ChatNormalRequest):
+    response = handle_chat_normal(request.message, request.user_id, request.normal)
+    return {"response": response}
 
 if __name__ == "__main__":
     import uvicorn
