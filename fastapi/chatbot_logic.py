@@ -45,6 +45,24 @@ llm_chain = (
   | StrOutputParser()
 )
 
+def handle_chat_normal(user_message,user_id,normal):
+    user_message = user_message.lower()
+    chat_session_normal= chat_collection.find_one({"user_id": user_id, "normal": True}, sort=[("_id", -1)])
+    print("DEBUG chat_session_normal:", chat_session_normal)
+    # chat_session_normal = chat_collection.find_one({"user_id": user_id})
+    # print("DEBUG result:", chat_session_normal)
+
+    if chat_session_normal:
+        answers = chat_session_normal["answers"]
+        bot= chat_session_normal["bot"]
+        answers.append(user_message)
+        # update_data = {"answers": answers, "step": step}
+        response = llm_chain.invoke({"context": "", "context_db": "", "question": user_message})
+        print("DEBUG response:", response)
+        bot.append(response)
+        chat_collection.update_one({"_id": chat_session_normal["_id"]}, {"$set": {"answers": answers, "bot": bot}})
+        return {"response": response, "normal": normal}
+    return {"normal":normal, "response": "Xin lỗi, tôi không hiểu."}
 # 🔹 Hàm xử lý khi người dùng nhập tin nhắn ban đầu
 def process_message(user_message, user_id):
     user_message = user_message.lower()
@@ -72,14 +90,21 @@ def process_message(user_message, user_id):
             })
 
             return {"response": questions[0], "context": key}
-
-    response = llm_chain.invoke({"context": "Tư vấn tâm lý", "context_db": "", "question": user_message})
-    return {"response": response}
-
+    
+    response = llm_chain.invoke({"context": "", "context_db": "", "question": user_message})
+    print("DEBUG response:", response) 
+    chat_collection.insert_one({
+        "user_id": user_id,
+        "user": user_message,
+        "bot": [response],
+        "normal": True,
+        "answers": []
+    })
+    
+    return {"response": response,"normal": True}
 # 🔹 Hàm xử lý câu trả lời của người dùng
 def handle_answer(user_message, user_id):
     chat_session = chat_collection.find_one({"user_id": user_id, "completed": False}, sort=[("_id", -1)])
-
     if chat_session:
         questions = chat_session["questions"]
         answers = chat_session["answers"]
@@ -101,6 +126,7 @@ def handle_answer(user_message, user_id):
             analysis = analyze_answers(chat_session["context"], answers)
             return {"response": analysis}
 
+   
     return {"response":{"response":"Xin lỗi, tôi không hiểu."}}
 
 # 🔹 Hàm gửi dữ liệu đến AI để phân tích khi kết thúc câu hỏi
