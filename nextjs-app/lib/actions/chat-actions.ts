@@ -25,6 +25,5 @@ export const ChatAction = async (req: ChatRequest): Promise<ChatResponse> => {
     cache: 'no-store',
   });
   const result = await res.json();
-  console.log('🚀 ~ ChatAction ~ result:', result);
   return result;
 };
