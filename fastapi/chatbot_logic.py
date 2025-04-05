@@ -14,7 +14,7 @@ client = MongoClient(MONGO_URI)
 db = client["chatbot_db"]
 chat_collection = db["chats"]
 
-# Tải kịch bản câu hỏi
+# Tải kịch bản câu hỏisdsdj
 def load_question_templates():
     with open("question_templates.json", "r", encoding="utf-8") as f:
         return json.load(f)

@@ -4,22 +4,22 @@ fastapi/venv
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/frontend/node_modules
-/frontend/.pnp
-/frontend/.pnp.js
-/frontend/bun.lock
+/nextjs-app/node_modules
+/nextjs-app/.pnp
+/nextjs-app/.pnp.js
+/nextjs-app/bun.lock
 # testing
-/frontend/coverage
+/nextjs-app/coverage
 
 # production
-/frontend/build
+/nextjs-app/build
 
 # misc
-/frontend/.DS_Store
-/frontend/.env.local
-/frontend/.env.development.local
-/frontend/.env.test.local
-/frontend/.env.production.local
+/nextjs-app/.DS_Store
+/nextjs-app/.env.local
+/nextjs-app/.env.development.local
+/nextjs-app/.env.test.local
+/nextjs-app/.env.production.local
 
 npm-debug.log*
 yarn-debug.log*
