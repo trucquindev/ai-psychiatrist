@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import uuid
 from chatbot_logic import process_message, handle_answer , handle_chat_normal
-
+from app.speech_to_text import speech_to_text
 app = FastAPI()
 # 🛠️ Cấu hình CORS
 app.add_middleware(
@@ -25,7 +25,8 @@ class ChatNormalRequest(BaseModel):
     message: str
     user_id: str
     normal: bool
-
+class SpeechTextResponse(BaseModel):
+    text: str
 # 📨 API xử lý tin nhắn ban đầu (Tự tạo user_id)
 @app.post("/chat")
 def chat(request: ChatRequest):
@@ -42,7 +43,11 @@ def answer(request: AnswerRequest):
 def chat_normal(request: ChatNormalRequest):
     response = handle_chat_normal(request.message, request.user_id, request.normal)
     return {"response": response}
-
+# 🗣️ API nhận diện giọng nói
+@app.get("/speech_to_text", response_model=SpeechTextResponse)
+def get_speech_text():
+    text = speech_to_text()
+    return {"text": text}
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
