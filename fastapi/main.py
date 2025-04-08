@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,UploadFile, File
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import uuid
@@ -44,10 +44,9 @@ def chat_normal(request: ChatNormalRequest):
     response = handle_chat_normal(request.message, request.user_id, request.normal)
     return {"response": response}
 # 🗣️ API nhận diện giọng nói
-@app.get("/speech_to_text", response_model=SpeechTextResponse)
-def get_speech_text():
-    text = speech_to_text()
-    return {"text": text}
+@app.post("/speech-to-text")
+async def speech_to_text_route(file: UploadFile = File(...)):
+    return await speech_to_text(file)
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
