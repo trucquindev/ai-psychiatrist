@@ -3,8 +3,9 @@
 import React from 'react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { Send } from 'lucide-react';
+import { Mic, Send } from 'lucide-react';
 import { ChatAction } from '@/lib/actions/chat-actions';
+import MicPopup from './input-mic';
 
 interface InputChatProps {
   setMess: (e: any) => void;
@@ -32,6 +33,9 @@ const InputChat = ({ setMess, setResult }: InputChatProps) => {
         }}
         placeholder="Type your message here..."
       />
+      <div onClick={()=>{}} className="flex items-center justify-center">
+        <MicPopup />
+      </div>
       <Button
         onClick={() => {
           if (value.length < 4) {
