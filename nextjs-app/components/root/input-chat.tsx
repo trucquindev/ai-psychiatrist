@@ -3,7 +3,7 @@
 import React from 'react';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
-import { Mic, Send } from 'lucide-react';
+import { Send } from 'lucide-react';
 import { ChatAction } from '@/lib/actions/chat-actions';
 import MicPopup from './input-mic';
 
@@ -13,6 +13,7 @@ interface InputChatProps {
 }
 const InputChat = ({ setMess, setResult }: InputChatProps) => {
   const [value, setValue] = React.useState<string>('');
+  console.log('🚀 ~ InputChat ~ value:', value);
   const handleSubmit = () => {
     ChatAction({ message: value }).then((response) => {
       setResult((prev: string[]) => {
@@ -33,8 +34,8 @@ const InputChat = ({ setMess, setResult }: InputChatProps) => {
         }}
         placeholder="Type your message here..."
       />
-      <div onClick={()=>{}} className="flex items-center justify-center">
-        <MicPopup />
+      <div className="flex items-center justify-center">
+        <MicPopup setValue={setValue} />
       </div>
       <Button
         onClick={() => {

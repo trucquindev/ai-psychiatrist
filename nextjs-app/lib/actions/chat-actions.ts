@@ -3,6 +3,7 @@ import { API_URL } from '@/lib/actions/const';
 interface ChatRequest {
   message: string;
   context?: string;
+  userId?: string;
 }
 interface ChatResponse {
   user_id: string;

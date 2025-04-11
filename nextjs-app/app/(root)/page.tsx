@@ -7,8 +7,9 @@ import { useState } from 'react';
 
 export default function Home() {
   const [mess, setMess] = useState<string[]>([]);
+  console.log('🚀 ~ Home ~ mess:', mess);
   const [result, setResult] = useState<string[]>([]);
-  console.log('🚀 ~ Home ~ result:', result);
+  // console.log('🚀 ~ Home ~ result:', result);
   return (
     <main className="py-10">
       <ShowChat>

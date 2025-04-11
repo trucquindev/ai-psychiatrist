@@ -1,10 +1,13 @@
 'use client';
 import { API_URL } from '@/lib/actions/const';
 import { Mic } from 'lucide-react';
-import { useRef, useState } from 'react';
-export default function MicPopup() {
+import { Dispatch, SetStateAction, useRef, useState } from 'react';
+interface InputChatProps {
+  setValue: Dispatch<SetStateAction<string>>;
+}
+export default function MicPopup({ setValue }: InputChatProps) {
   const [isRecording, setIsRecording] = useState(false);
-  const [text, setText] = useState('');
+  // const [text, setText] = useState('');
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -75,12 +78,12 @@ export default function MicPopup() {
       });
 
       const data = await res.json();
-      setText(data.text || 'Không nhận diện được');
+      // setText(data.text || 'Không nhận diện được');
+      setValue(data.text || 'Tôi bị câm');
     };
     mediaRecorder.start();
     startVisualizer(stream);
   };
-  console.log('🚀 ~ MicPopup ~ text:', text);
   const stopRecording = () => {
     setIsRecording(false);
     mediaRecorderRef.current?.stop();
