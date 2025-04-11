@@ -91,16 +91,8 @@ def process_message(user_message, user_id):
 
             return {"response": questions[0], "context": key}
     
+    # Nếu không tìm thấy câu hỏi nào trong templates, gửi đến AI để xử lý
     response = llm_chain.invoke({"context": "", "context_db": "", "question": user_message})
-    print("DEBUG response:", response) 
-    chat_collection.insert_one({
-        "user_id": user_id,
-        "user": user_message,
-        "bot": [response],
-        "normal": True,
-        "answers": []
-    })
-    
     return {"response": response,"normal": True}
 # 🔹 Hàm xử lý câu trả lời của người dùng
 def handle_answer(user_message, user_id):
